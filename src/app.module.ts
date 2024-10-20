@@ -5,13 +5,18 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DbModule } from './db/db.module';
 import { Make } from './db/entities/make.entity';
 import { VehicleType } from './db/entities/vehicle-type.entity';
-import { MakeResolver } from './makes/make.resolver';
 import { MakesModule } from './makes/makes.module';
 
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
+      context: ({ req, res }) => {
+        res.setHeader('Content-Type', 'application/json');
+        res.setHeader('X-Apollo-Operation-Name', 'getAllMakes');
+        res.setHeader('apollo-require-preflight', true);
+        return { req, res };
+      },
       autoSchemaFile: true,
     }),
     TypeOrmModule.forRoot({

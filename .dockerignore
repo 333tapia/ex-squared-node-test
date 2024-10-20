@@ -1,0 +1,27 @@
+# Node modules
+node_modules
+npm-debug.log
+
+# Build output
+dist
+build
+
+# Coverage reports
+coverage
+*.lcov
+
+# IDE and OS specific files
+.idea
+.vscode
+.DS_Store
+Thumbs.db
+
+# Docker files
+Dockerfile
+docker-compose.yml
+
+# Test files
+*.spec.ts
+*.test.ts
+__tests__/
+tests/

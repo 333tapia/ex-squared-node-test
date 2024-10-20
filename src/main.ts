@@ -4,7 +4,9 @@ import { SeedService } from './db/seed.service';
 import { existsSync } from 'fs';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    cors: true,
+  });
   const dbExists = existsSync('database.sqlite');
   if (!dbExists) {
     const dbSeed = app.get(SeedService);
