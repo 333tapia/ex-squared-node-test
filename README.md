@@ -45,6 +45,22 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## GraphQL
+
+Visit localhost:4000/graphql and use this to get the desired response
+
+```
+{
+  getAllMakes {
+    makeId
+    makeName
+    vehicleTypes {
+      typeId
+      typeName
+    }
+  }
+}
+
 ## Run tests
 
 ```bash
