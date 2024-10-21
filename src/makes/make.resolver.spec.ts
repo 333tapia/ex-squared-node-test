@@ -3,14 +3,21 @@ import { MakeResolver } from './make.resolver';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Make } from '../db/entities/make.entity';
+import { Queue } from 'bull';
+import { getQueueToken } from '@nestjs/bull';
 
 const mockMakeRepository = {
   find: jest.fn(),
 };
 
+const mockSeedQueue = {
+  add: jest.fn(),
+};
+
 describe('MakeResolver', () => {
   let makeResolver: MakeResolver;
   let makeRepository: Repository<Make>;
+  let seedQueue: Queue;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -20,11 +27,16 @@ describe('MakeResolver', () => {
           provide: getRepositoryToken(Make),
           useValue: mockMakeRepository,
         },
+        {
+          provide: getQueueToken('db-seed'),
+          useValue: mockSeedQueue,
+        },
       ],
     }).compile();
 
     makeResolver = module.get<MakeResolver>(MakeResolver);
     makeRepository = module.get<Repository<Make>>(getRepositoryToken(Make));
+    seedQueue = module.get<Queue>(getQueueToken('db-seed'));
   });
 
   afterEach(() => {
@@ -71,10 +83,12 @@ describe('MakeResolver', () => {
       expect(makeRepository.find).toHaveBeenCalledWith({
         relations: ['vehicleTypes'],
       });
+      expect(seedQueue.add).not.toHaveBeenCalled();
     });
 
     it('should return an empty array if no makes found', async () => {
       mockMakeRepository.find.mockResolvedValue([]);
+      mockSeedQueue.add.mockResolvedValue({});
 
       const result = await makeResolver.getAllMakes();
 
@@ -82,6 +96,7 @@ describe('MakeResolver', () => {
       expect(makeRepository.find).toHaveBeenCalledWith({
         relations: ['vehicleTypes'],
       });
+      expect(seedQueue.add).toHaveBeenCalledWith({});
     });
   });
 });

@@ -45,6 +45,14 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Redis
+
+Star Redis
+
+```bash
+docker-compose up -d
+```
+
 ## GraphQL
 
 Visit localhost:4000/graphql and use this to get the desired response
