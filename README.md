@@ -60,6 +60,7 @@ Visit localhost:4000/graphql and use this to get the desired response
     }
   }
 }
+```
 
 ## Run tests
 
