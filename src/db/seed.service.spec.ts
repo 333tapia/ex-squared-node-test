@@ -24,7 +24,6 @@ describe('SeedService', () => {
   let seedService: SeedService;
   let makeRepository: Repository<Make>;
   let vehicleTypeRepository: Repository<VehicleType>;
-  let httpService: HttpService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -48,7 +47,6 @@ describe('SeedService', () => {
     seedService = module.get<SeedService>(SeedService);
     makeRepository = module.get(getRepositoryToken(Make));
     vehicleTypeRepository = module.get(getRepositoryToken(VehicleType));
-    httpService = module.get<HttpService>(HttpService);
   });
 
   afterEach(() => {

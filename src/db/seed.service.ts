@@ -66,7 +66,7 @@ export class SeedService {
       );
       return makes;
     } catch (error) {
-      console.error('Error fetching Makes data', error);
+      console.log('Error fetching Makes data', error);
     }
   }
 
@@ -89,7 +89,7 @@ export class SeedService {
         }));
       return vehicleTypes;
     } catch (error) {
-      console.error('Error fetching Vehicle Types data', error);
+      console.log('Error fetching Vehicle Types data', error);
     }
   }
 }
